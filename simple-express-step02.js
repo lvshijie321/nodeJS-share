@@ -1,8 +1,8 @@
 /**
  * 步骤 2 ：模仿 express 实现静态资源托管中间件和 post 请求参数获取中间件
  *    （1）开发一个静态资源托管服务
- *    （2）开发静态资源中间件
- *    （3）开发 post 参数获取中间件
+ *    （2）添加静态资源中间件
+ *    （3）添加 post 参数获取中间件
  */
 
 const simpleExpress = require("./libs/simple-express-02");
