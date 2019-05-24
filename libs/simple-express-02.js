@@ -128,17 +128,18 @@ function SimpleExpress() {
         const method = req.method.toLowerCase();
         
         // 获取 post 请求参数
-        Staticer.bodyParser.forEach(item => {
-            switch (item.type) {
-                case 'formData':
-                    let postStr = "";
-                    req.on("data", chunk => postStr += chunk.toString());
-                    req.on("end", () => {
-                        req.bodyStr = postStr;
-                    });
-                    break;
-            }
-        })
+        method === 'post' 
+            && Staticer.bodyParser.forEach(item => {
+                switch (item.type) {
+                    case 'formData':
+                        let postStr = "";
+                        req.on("data", chunk => postStr += chunk.toString());
+                        req.on("end", () => {
+                            req.bodyStr = postStr;
+                        });
+                        break;
+                    }
+                })
 
         // 处理静态资源
         handleStatic(method, req)

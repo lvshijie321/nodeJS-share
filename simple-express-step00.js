@@ -1,6 +1,8 @@
 /**
  * 步骤 0 ：为模仿 express 框架先做一些铺垫，了解一些原生 nodeJS 服务端开发的知识
- *
+ *    （1）get 和 post 请求获取参数的方式
+ *    （2）响应类型 - Content-Type
+ *    （3）url 内置模块
  */
 
 const http = require("http");

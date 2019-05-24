@@ -17,10 +17,10 @@ const routes = {
         "/favicon.ico": {
             params: [],
             callback: (req, res) => {
-        res.writeHead(200, {
-            "Content-Type": "text/html;charset=utf-8"
-        });
-        res.end();
+                res.writeHead(200, {
+                    "Content-Type": "text/html;charset=utf-8"
+                });
+                res.end();
             }
         }
     },
@@ -65,8 +65,8 @@ module.exports = function() {
         const method = req.method.toLowerCase();
 
         // 解析路由动态参数部分
-        const _pathName = url.parse(req.url).pathname; // http://127.0.0.1:1001/login => login
-        const pathName = Object.keys(routes[method]).find(item => {
+        const _pathName = url.parse(req.url).pathname; // http://127.0.0.1:1001/news/china/1/2 => /news/china/1/2
+        const pathName = Object.keys(routes[method]).find(item => { // 1 -> id 2 -> uid
             const matched = _pathName.match(item)
             const hasParam = routes[method][item].params.length
             if (matched && !matched.index && hasParam) { // 是动态路由
@@ -76,7 +76,7 @@ module.exports = function() {
             }
         })
         
-        // 匹配动态参数
+        // 匹配动态参数: http://127.0.0.1:1001/news/china/1/2 => {id: 1, uid: 2}
         let params = {}
         if (pathName) {
             const _params = _pathName.slice(pathName.length).split('/').slice(1)
@@ -85,12 +85,16 @@ module.exports = function() {
                 return acc
             },{})
         }
+
+        // 执行对应的路由
         pathName // 能匹配到路由吗
             ? method === "get" // 匹配到路由，判断 method 类型是 get 吗
+
                 ? (() => { // method 类型为 get
                     req._params = params
                     routes[method][pathName].callback(req, res)
                   })()
+
                 : (() => { // method 类型为 post
                     // 开始获取 formData
                     let payload = "";
@@ -102,13 +106,14 @@ module.exports = function() {
                         routes[method][pathName].callback(req, res);
                     });
                   })()  
+
             : routes["/404"](req, res)// 未匹配到路由，则认为是 404
     });
 
-    // 注册 get 和 post 方法
+    // 注册 get 和 post 路由
     methods.forEach(item => {
       server[item] = (route, callback) => {
-        // 解析动态路由参数和路由名
+        // 解析动态路由参数和路由名：/news/china/:id/:uid -> params: [ 'id', 'uid' ]
         const { route: routeName, params } = matchDynRoute(route)
         routes[item][routeName] = {
             callback,

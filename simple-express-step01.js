@@ -1,5 +1,7 @@
 /**
  * 步骤 1 ：模仿 express 实现路由最基本的用法
+ *    （1） 路由分发
+ *    （2） 解析路由中的动态参数 
  */
 
 const simpleExpress = require("./libs/simple-express-01");
