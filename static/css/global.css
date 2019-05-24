@@ -1,0 +1,11 @@
+input {
+    border: 1px solid gray;
+}
+html, body {
+    height: 100%;
+    background: #cccccc;
+}
+body {
+    width: 30%;
+    margin: 10% auto;
+}

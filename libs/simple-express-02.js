@@ -152,7 +152,8 @@ function SimpleExpress() {
                     res.write(
                         data, 'binary'
                     );
-                    res.end();
+                    
+                    res.end()
                 });
             })
             .catch(err => { // 不是静态资源
@@ -215,7 +216,7 @@ function SimpleExpress() {
             !Staticer.bodyParser && (Staticer.bodyParser = [])
             Staticer.bodyParser.push(middle)
         }
-        
+
         // 中间件有很多种，可以继续添加内置中间件，如处理 post 请求的中间件、session 中间件等，或提供开发者自行添加需要的中间件。
     }
     // 注册 get 和 post 方法
